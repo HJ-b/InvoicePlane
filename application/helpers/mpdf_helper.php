@@ -46,7 +46,27 @@ function pdf_create(
         define('_MPDF_TTFONTDATAPATH', UPLOADS_TEMP_MPDF_FOLDER);
     }
 
-    $mpdf = new \Mpdf\Mpdf();
+    $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
+    $fontDirs = $defaultConfig['fontDir'];
+
+    $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
+    $fontData = $defaultFontConfig['fontdata'];
+
+    $mpdf = new \Mpdf\Mpdf([
+        'fontDir' => array_merge($fontDirs, [
+            FCPATH . 'assets/dk/fonts',
+        ]),
+        'fontdata' => $fontData + [
+            'istokweb' => [
+                'R' => "IstokWeb-Regular.ttf",
+                'B' => "IstokWeb-Bold.ttf",
+            ],
+            'montserrat' => [
+                'R' => "Montserrat-Regular.ttf",
+                'B' => "Montserrat-Bold.ttf",
+            ],
+        ],
+    ]);
 
     // mPDF configuration
     $mpdf->useAdobeCJK = true;
