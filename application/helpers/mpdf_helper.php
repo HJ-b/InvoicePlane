@@ -68,6 +68,9 @@ function pdf_create(
         ],
     ]);
 
+    // Allow images over SSL
+    $mpdf->curlAllowUnsafeSslRequests = true;
+
     // mPDF configuration
     $mpdf->useAdobeCJK = true;
     $mpdf->autoScriptToLang = true;
